@@ -53,11 +53,13 @@ class SchoolsController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'code' => 'required',
+            'city' => 'required',
             'address' => 'required'
         ]);
         $school = new Schools();
         $school->name = $request->name;
         $school->code = $request->code;
+        $school->city = $request->city;
         $school->address = $request->address;
 
         
@@ -93,6 +95,7 @@ class SchoolsController extends Controller
 
         $data['name'] = $request->name;
         $data['code'] = $request->code;
+        $data['city'] = $request->city;
         $data['address'] = $request->address;
 
 

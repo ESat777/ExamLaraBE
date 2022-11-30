@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('applis', function (Blueprint $table) {
             $table->id();
             $table->integer('approved')->default(0);
-            $table->unsignedBigInteger('schools_id')->nullable();
+            $table->unsignedBigInteger('school_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('school_id')->references('id')->on('schools');
             $table->foreign('user_id')->references('id')->on('users');
