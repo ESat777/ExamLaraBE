@@ -17,7 +17,7 @@ class AppliController extends Controller
 
         foreach ($applis as $appli) {
             $school = Schools::find($appli->school_id);
-            $school['hotel_name'] = $school->name;
+            $school['school_name'] = $school->name;
             $school['code'] = $school->code;
             $school['address'] = $school->address;
             $generatedApplis[] = $appli;
@@ -50,9 +50,10 @@ class AppliController extends Controller
         $generatedApplis = [];
 
         foreach ($applis as $appli) {
-            $school = Appli::find($appli->appli_id);
-            $appli['appli_name'] = $school->name;
+            $school = Schools::find($appli->school_id);
+            $appli['school_name'] = $school->name;
             $appli['code'] = $school->code;
+            $appli['city'] = $school->city;
             $appli['address'] = $school->address;
             $generatedApplis[] = $appli;
         }
@@ -67,7 +68,7 @@ class AppliController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'hotel_id' => 'required'
+            'school_id' => 'required'
         ]);
 
 
@@ -101,12 +102,12 @@ class AppliController extends Controller
         if ($school->update(['approved' => $school->approved === 0 ? 1 : 0]))
             return response()->json([
                 'success' => true,
-                'message' => 'prašymas sėkmingai patvirtintas'
+                'message' => 'Prašymo statusas sėkmingai pakeistas.'
             ]);
         else
             return response()->json([
                 'success' => false,
-                'message' => 'Nepavyko patvirtinti prašymo'
+                'message' => 'Nepavyko pakeisti prašymo statuso.'
             ], 500);
     }
 
