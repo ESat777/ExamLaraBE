@@ -14,7 +14,7 @@ class Appli extends Model
 
     public function schools()
     {
-        return $this->belongsTo(Schools::class, 'school_id');
+        return $this->belongsTo(Schools::class);
     }
 
 }
