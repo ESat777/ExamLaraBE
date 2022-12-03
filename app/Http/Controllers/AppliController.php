@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Appli;
 use App\Models\Schools;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,9 +18,12 @@ class AppliController extends Controller
 
         foreach ($applis as $appli) {
             $school = Schools::find($appli->school_id);
-            $school['school_name'] = $school->name;
-            $school['code'] = $school->code;
-            $school['address'] = $school->address;
+            $user = User::find($appli->user_id);
+            $appli['school_name'] = $school->name;
+            $appli['code'] = $school->code;
+            $appli['city'] = $school->city;
+            $appli['user'] = $user->email;
+            // $appli['address'] = $school->address;
             $generatedApplis[] = $appli;
         }
 
@@ -68,12 +72,14 @@ class AppliController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'school_id' => 'required'
+            // 'school_id' => 'required'
         ]);
 
 
         $school = new Appli();
         $school->school_id = $request->school_id;
+        $school->name = $request->name;
+        $school->surname = $request->surname;
         $school->approved = 0;
         $school->user_id = auth()->user()->id;
 

@@ -9,7 +9,7 @@ class Appli extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'approved'
+        'approved', 'student_id', 'class', 'name', 'surname', 'student_bd'
     ];
 
     public function schools()
