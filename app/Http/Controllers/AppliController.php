@@ -12,6 +12,12 @@ class AppliController extends Controller
 {
     public function index()
     {
+        if (auth()->user()->role != 1)
+        return response()->json([
+            'success' => false,
+            'message' => 'Unauthorized'
+        ], 401);
+
         $applis = Appli::where('user_id', auth()->user()->id)->get();
 
         $generatedApplis = [];
@@ -72,7 +78,7 @@ class AppliController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            // 'school_id' => 'required'
+            'school_id' => 'required'
         ]);
 
 
@@ -80,8 +86,12 @@ class AppliController extends Controller
         $school->school_id = $request->school_id;
         $school->name = $request->name;
         $school->surname = $request->surname;
+        $school->student_bd = $request->student_bd;
+        $school->student_id = $request->student_id;
+        $school->class = $request->class;
         $school->approved = 0;
         $school->user_id = auth()->user()->id;
+ 
 
         if ($school->save())
             return response()->json([
@@ -119,7 +129,7 @@ class AppliController extends Controller
 
     public function destroy($id, Appli $applis)
     {
-        //Authentification
+        // Authentification
         if (auth()->user()->role != 0)
             return response()->json([
                 'success' => false,
@@ -139,4 +149,21 @@ class AppliController extends Controller
                 'message' => 'Nepavyko ištrinti prašymo'
             ], 500);
     }
+
+    public function destroyAppli($id, Appli $applis)
+    {
+        $school = Appli::where('id', $id);
+
+        if ($school->delete())
+            return response()->json([
+                'success' => true,
+                'message' => 'Prašymas sėkmingai ištrintas'
+            ]);
+        else
+            return response()->json([
+                'success' => false,
+                'message' => 'Nepavyko ištrinti prašymo'
+            ], 500);
+    }
 }
+

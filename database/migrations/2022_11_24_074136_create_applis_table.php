@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('applis', function (Blueprint $table) {
             $table->id();
             $table->integer('approved')->default(0);
-            $table->integer('student_id')->default(0);
-            $table->integer('class')->default(0);
+            $table->string('student_id')->nullable();
+            $table->string('class')->nullable();
             $table->string('name')->nullable();
             $table->string('surname')->nullable();
-            $table->date('student_bd')->nullable();
+            $table->string('student_bd')->nullable();
             $table->unsignedBigInteger('school_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('school_id')->references('id')->on('schools');

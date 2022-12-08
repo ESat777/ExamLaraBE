@@ -34,3 +34,4 @@ Route::get('applications/{id}', [AppliController::class, 'status'])->middleware(
 Route::post('applications', [AppliController::class, 'store'])->middleware('auth:api');
 Route::post('student/register', [AppliController::class, 'store'])->middleware('auth:api');
 Route::delete('applications/{id}', [AppliController::class, 'destroy'])->middleware('auth:api');
+Route::delete('applicationsS/{id}', [AppliController::class, 'destroyAppli'])->middleware('auth:api');
