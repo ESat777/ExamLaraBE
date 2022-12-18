@@ -24,12 +24,10 @@ class AppliController extends Controller
 
         foreach ($applis as $appli) {
             $school = Schools::find($appli->school_id);
-            $user = User::find($appli->user_id);
+            $applic = Appli::find($appli->id);
             $appli['school_name'] = $school->name;
-            $appli['code'] = $school->code;
+            $appli['student_code'] = $applic->student_id;
             $appli['city'] = $school->city;
-            $appli['user'] = $user->email;
-            // $appli['address'] = $school->address;
             $generatedApplis[] = $appli;
         }
 
