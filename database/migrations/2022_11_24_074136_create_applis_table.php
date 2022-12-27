@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('approved')->default(0);
             $table->string('student_id')->nullable();
+            // $table->float('personalCode', 9, 0) ;
             $table->string('class')->nullable();
             $table->string('name')->nullable();
             $table->string('surname')->nullable();
