@@ -31,6 +31,7 @@ Route::delete('schools/{id}', [SchoolsController::class, 'destroy'])->middleware
 Route::get('applications', [AppliController::class, 'index'])->middleware('auth:api');
 Route::get('applications/all', [AppliController::class, 'all'])->middleware('auth:api');
 Route::get('applications/{id}', [AppliController::class, 'status'])->middleware('auth:api');
+Route::get('applicationsS/{id}', [AppliController::class, 'show'])->middleware('auth:api');
 Route::post('applications', [AppliController::class, 'store'])->middleware('auth:api');
 Route::post('student/register', [AppliController::class, 'store'])->middleware('auth:api');
 Route::delete('applications/{id}', [AppliController::class, 'destroy'])->middleware('auth:api');

@@ -28,6 +28,7 @@ class AppliController extends Controller
             $appli['school_name'] = $school->name;
             $appli['student_code'] = $applic->student_id;
             $appli['city'] = $school->city;
+            $appli['created_at'] = $applic->created_at;
             $generatedApplis[] = $appli;
         }
 
@@ -162,6 +163,44 @@ class AppliController extends Controller
                 'success' => false,
                 'message' => 'Nepavyko ištrinti prašymo'
             ], 500);
+    }
+    public function show($id)
+    {
+        if (auth()->user()->role != 0)
+        return response()->json([
+            'success' => false,
+            'message' => 'Unauthorized'
+        ], 401);
+
+        $applis = Appli::where('id',$id)->get();
+
+        $generatedApplis = [];
+
+        foreach ($applis as $appli) {
+            $school = Schools::find($appli->school_id);
+            $applic = Appli::find($appli->id);
+            $user = User::find($appli->user_id);
+            $appli['school_name'] = $school->name;
+            $appli['student_code'] = $applic->student_id;
+            $appli['city'] = $school->city;
+            $appli['user_name'] = $user->name;
+            $appli['school_address'] = $school->address;
+            $appli['school_code'] = $school->code;
+            $appli['created_at'] = $applic->created_at;
+            $generatedApplis[] = $appli;
+        }
+
+        if ($generatedApplis) {
+            return response()->json([
+                'success' => true,
+                'message' => $generatedApplis
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Nepavyko gauti prašymų sąrašo'
+            ], 500);
+        }
     }
 }
 
